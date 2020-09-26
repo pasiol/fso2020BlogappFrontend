@@ -8,7 +8,17 @@ const BlogDetails = React.forwardRef((props, ref) => {
     setVisible(!visible);
   };
 
-  console.log('props BlogDetails: ', props);
+  const addVote = async (event) => {
+    event.preventDefault();
+    props.updateBlog({
+      id: props.blog.id,
+      title: props.blog.title,
+      author: props.blog.author,
+      url: props.blog.url,
+      likes: ++props.blog.likes,
+    });
+  };
+
   return (
     <>
       <div style={hideWhenVisible}>
@@ -22,7 +32,7 @@ const BlogDetails = React.forwardRef((props, ref) => {
         {props.blog.url}
         <br />
         likes {props.blog.likes}
-        <button>like</button>
+        <button onClick={addVote}>like</button>
         <br />
         {props.blog.author}
         <br />

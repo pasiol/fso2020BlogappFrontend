@@ -13,6 +13,7 @@ const BlogForm = ({ user, createBlog, notify, blogFormRef }) => {
         title: title,
         author: author,
         url: url,
+        likes: 0,
       });
       setTitle('');
       setAuthor('');

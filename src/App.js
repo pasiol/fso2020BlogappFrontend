@@ -74,6 +74,16 @@ const App = () => {
     }
   };
 
+  const updateBlog = async (blogObject) => {
+    try {
+      await blogService.update(blogObject);
+
+      notify(`updating ${blogObject.title} succesfully`, 'success');
+    } catch (error) {
+      notify(`updating ${blogObject.title} failed: ${error}`, 'error');
+    }
+  };
+
   const handleLogout = async (event) => {
     event.preventDefault();
     blogService.setToken(null);
@@ -102,7 +112,7 @@ const App = () => {
       />
       <h2>blogs</h2>
       {blogs.map((blog) => (
-        <Blog key={blog.title} blog={blog} />
+        <Blog key={blog.title} blog={blog} updateBlog={updateBlog} />
       ))}
     </div>
   );

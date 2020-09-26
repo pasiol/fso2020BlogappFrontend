@@ -17,7 +17,12 @@ const App = () => {
   const blogFormRef = useRef();
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    blogService.getAll().then((blogs) => {
+      blogs.sort(function (a, b) {
+        return b.likes - a.likes;
+      });
+      setBlogs(blogs);
+    });
   }, []);
 
   useEffect(() => {
@@ -77,7 +82,10 @@ const App = () => {
   const updateBlog = async (blogObject) => {
     try {
       await blogService.update(blogObject);
-
+      blogs.sort(function (a, b) {
+        return b.likes - a.likes;
+      });
+      setBlogs(blogs);
       notify(`updating ${blogObject.title} succesfully`, 'success');
     } catch (error) {
       notify(`updating ${blogObject.title} failed: ${error}`, 'error');

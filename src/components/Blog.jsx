@@ -1,7 +1,7 @@
 import React from 'react';
 import BlogDetails from './BlogDetails';
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, removeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -12,7 +12,12 @@ const Blog = ({ blog, updateBlog }) => {
 
   return (
     <div style={blogStyle}>
-      <BlogDetails buttonLabel="view" blog={blog} updateBlog={updateBlog} />
+      <BlogDetails
+        buttonLabel="view"
+        blog={blog}
+        updateBlog={updateBlog}
+        removeBlog={removeBlog}
+      />
     </div>
   );
 };

@@ -92,6 +92,20 @@ const App = () => {
     }
   };
 
+  const removeBlog = async (blogObject) => {
+    try {
+      await blogService.remove(blogObject);
+      const updatedBlogs = await blogService.getAsyncAll();
+      setBlogs(updatedBlogs);
+      blogs.sort(function (a, b) {
+        return b.likes - a.likes;
+      });
+      notify(`removing ${blogObject.title} succesfully`, 'success');
+    } catch (error) {
+      notify(`deleting ${blogObject.title} failed: ${error}`, 'error');
+    }
+  };
+
   const handleLogout = async (event) => {
     event.preventDefault();
     blogService.setToken(null);
@@ -120,7 +134,12 @@ const App = () => {
       />
       <h2>blogs</h2>
       {blogs.map((blog) => (
-        <Blog key={blog.title} blog={blog} updateBlog={updateBlog} />
+        <Blog
+          key={blog.title}
+          blog={blog}
+          updateBlog={updateBlog}
+          removeBlog={removeBlog}
+        />
       ))}
     </div>
   );

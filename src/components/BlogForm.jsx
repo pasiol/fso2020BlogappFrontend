@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Togglable from './Togglable';
 
-const BlogForm = ({
-  user,
-  addBlog,
-  title,
-  setTitle,
-  author,
-  setAuthor,
-  url,
-  setUrl,
-  blogFormRef,
-}) => {
+const BlogForm = ({ user, createBlog, notify, blogFormRef }) => {
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
+
+  const addBlog = async (event) => {
+    if (title.length > 0 && author.length > 0 && url.length > 0) {
+      event.preventDefault();
+      createBlog({
+        title: title,
+        author: author,
+        url: url,
+      });
+      setTitle('');
+      setAuthor('');
+      setUrl('');
+    } else {
+      notify('missing information, can not save the blog', 'error');
+    }
+  };
+
   if (user != null) {
     return (
       <Togglable buttonLabel="new blog" ref={blogFormRef}>

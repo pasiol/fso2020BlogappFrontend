@@ -14,9 +14,6 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState('');
   const [notificationStyle, setNotificationStyle] = useState('');
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
   const blogFormRef = useRef();
 
   useEffect(() => {
@@ -66,36 +63,23 @@ const App = () => {
     }
   };
 
+  const addBlog = async (blogObject) => {
+    try {
+      await blogService.create(blogObject);
+      setBlogs(blogs.concat(blogObject));
+      notify(`a new blog ${blogObject.title} added`, 'success');
+      blogFormRef.current.toggleVisibility();
+    } catch (error) {
+      notify(`a new blog ${blogObject.title} cannot save: ${error}`, 'error');
+    }
+  };
+
   const handleLogout = async (event) => {
     event.preventDefault();
     blogService.setToken(null);
     setUser(null);
     window.localStorage.removeItem('loggedBlogappUser');
     await blogService.getAll().then((blogs) => setBlogs(blogs));
-  };
-
-  const addBlog = async (event) => {
-    if (title.length > 0 && author.length > 0 && url.length > 0) {
-      event.preventDefault();
-      const newBlog = {
-        title: title,
-        author: author,
-        url: url,
-      };
-      try {
-        await blogService.create(newBlog);
-        setTitle('');
-        setAuthor('');
-        setUrl('');
-        setBlogs(blogs.concat(newBlog));
-        notify(`a new blog ${newBlog.title} added`, 'success');
-      } catch (error) {
-        notify(`a new blog ${newBlog.title} cannot save: ${error}`, 'error');
-      }
-      blogFormRef.current.toggleVisibility();
-    } else {
-      notify('missing information, can not save the blog', 'error');
-    }
   };
 
   return (
@@ -112,13 +96,8 @@ const App = () => {
       />
       <BlogForm
         user={user}
-        title={title}
-        setTitle={setTitle}
-        author={author}
-        setAuthor={setAuthor}
-        url={url}
-        setUrl={setUrl}
-        addBlog={addBlog}
+        createBlog={addBlog}
+        nofify={notify}
         blogFormRef={blogFormRef}
       />
       <h2>blogs</h2>

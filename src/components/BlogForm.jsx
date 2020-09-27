@@ -23,7 +23,7 @@ const BlogForm = ({ user, createBlog, notify, blogFormRef }) => {
     }
   };
 
-  if (user != null) {
+  if (user !== null) {
     return (
       <Togglable buttonLabel="new blog" ref={blogFormRef}>
         <h2>create new</h2>

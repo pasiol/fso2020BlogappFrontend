@@ -1,14 +1,17 @@
 import React from 'react';
 
-const DeleteButton = ({ username, deleteBlog }) => {
-  console.log('user', username);
+const DeleteButton = (props) => {
+  console.log('DeleteButton props', props);
   const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
-  const user = JSON.parse(loggedUserJSON);
-  if (username === user.username) {
-    return <button onClick={deleteBlog}>delete</button>;
-  } else {
+  if (loggedUserJSON !== null) {
+    const user = JSON.parse(loggedUserJSON);
+    console.log('user', user);
+    if (props.username === user.username) {
+      return <button onClick={props.deleteBlog}>delete</button>;
+    }
     return <></>;
   }
+  return <></>;
 };
 
 export default DeleteButton;

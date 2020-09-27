@@ -1,7 +1,8 @@
 import React from 'react';
 import BlogDetails from './BlogDetails';
-
-const Blog = ({ blog, updateBlog, removeBlog }) => {
+import PropTypes from 'prop-types';
+const Blog = (props) => {
+  console.log('Blog props', props);
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -14,12 +15,18 @@ const Blog = ({ blog, updateBlog, removeBlog }) => {
     <div style={blogStyle}>
       <BlogDetails
         buttonLabel="view"
-        blog={blog}
-        updateBlog={updateBlog}
-        removeBlog={removeBlog}
+        blog={props.blog}
+        updateBlog={props.updateBlog}
+        removeBlog={props.removeBlog}
       />
     </div>
   );
+};
+
+Blog.propTypes = {
+  blog: PropTypes.object,
+  updateBlog: PropTypes.func,
+  removeBlog: PropTypes.func,
 };
 
 export default Blog;

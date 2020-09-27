@@ -1,18 +1,15 @@
 import React from 'react';
 
-const LogoutButton = ({user, handleLogout}) => {
-  if (user!=null) {
+const LogoutButton = ({ user, handleLogout }) => {
+  if (user !== null) {
     return (
       <>
         <button onClick={handleLogout}>logout</button>
       </>
-    )
+    );
   } else {
-    return (
-      <>
-      </>
-    )
+    return <></>;
   }
 };
 
-export default LogoutButton
+export default LogoutButton;

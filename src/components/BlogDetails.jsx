@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DeleteButton from './DeleteButton';
 
-const BlogDetails = ({ blog, updateBlog, removeBlog, buttonLabel }) => {
+const BlogDetails = (props) => {
   const [visible, setVisible] = useState(false);
   const hideWhenVisible = { display: visible ? 'none' : '' };
   const showWhenVisible = { display: visible ? '' : 'none' };
@@ -9,28 +9,30 @@ const BlogDetails = ({ blog, updateBlog, removeBlog, buttonLabel }) => {
     setVisible(!visible);
   };
 
-  console.log('blog: ', blog);
+  console.log('BlogDetails props: ', props);
 
   const addVote = async (event) => {
     event.preventDefault();
-    updateBlog({
-      id: blog.id,
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: ++blog.likes,
+    props.updateBlog({
+      id: props.blog.id,
+      title: props.blog.title,
+      author: props.blog.author,
+      url: props.blog.url,
+      likes: ++props.blog.likes,
     });
   };
 
   const deleteBlog = async (event) => {
     event.preventDefault();
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      removeBlog({
-        id: blog.id,
-        title: blog.title,
-        author: blog.author,
-        url: blog.url,
-        likes: blog.likes,
+    if (
+      window.confirm(`Remove blog ${props.blog.title} by ${props.blog.author}`)
+    ) {
+      props.removeBlog({
+        id: props.blog.id,
+        title: props.blog.title,
+        author: props.blog.author,
+        url: props.blog.url,
+        likes: props.blog.likes,
       });
     }
   };
@@ -38,21 +40,26 @@ const BlogDetails = ({ blog, updateBlog, removeBlog, buttonLabel }) => {
   return (
     <>
       <div style={hideWhenVisible}>
-        {blog.title}
-        <button onClick={toggleVisibility}>{buttonLabel}</button>
+        {props.blog.title}
+        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+        <br />
+        {props.blog.author}
       </div>
       <div style={showWhenVisible}>
-        {blog.title}
+        {props.blog.title}
         <button onClick={toggleVisibility}>hide</button>
         <br />
-        {blog.url}
+        {props.blog.url}
         <br />
-        likes {blog.likes}
+        likes {props.blog.likes}
         <button onClick={addVote}>like</button>
         <br />
-        {blog.author}
+        {props.blog.author}
         <br />
-        <DeleteButton deleteBlog={deleteBlog} username={blog.user.username} />
+        <DeleteButton
+          deleteBlog={deleteBlog}
+          username={props.blog.user.username}
+        />
       </div>
     </>
   );

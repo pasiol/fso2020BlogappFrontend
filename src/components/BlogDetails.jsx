@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import DeleteButton from './DeleteButton';
 
 const BlogDetails = (props) => {
-  const [visible, setVisible] = useState(false);
-  const hideWhenVisible = { display: visible ? 'none' : '' };
-  const showWhenVisible = { display: visible ? '' : 'none' };
+  const [visible, setVisible] = useState(true);
   const toggleVisibility = () => {
     setVisible(!visible);
   };
@@ -39,28 +37,32 @@ const BlogDetails = (props) => {
 
   return (
     <>
-      <div style={hideWhenVisible}>
-        {props.blog.title}
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
-        <br />
-        {props.blog.author}
-      </div>
-      <div style={showWhenVisible}>
-        {props.blog.title}
-        <button onClick={toggleVisibility}>hide</button>
-        <br />
-        {props.blog.url}
-        <br />
-        likes {props.blog.likes}
-        <button onClick={addVote}>like</button>
-        <br />
-        {props.blog.author}
-        <br />
-        <DeleteButton
-          deleteBlog={deleteBlog}
-          username={props.blog.user.username}
-        />
-      </div>
+      {visible && (
+        <div className="blogDetails">
+          {props.blog.title}
+          <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+          <br />
+          {props.blog.author}
+        </div>
+      )}
+      {!visible && (
+        <div className="blogDetails">
+          {props.blog.title}
+          <button onClick={toggleVisibility}>hide</button>
+          <br />
+          {props.blog.url}
+          <br />
+          likes {props.blog.likes}
+          <button onClick={addVote}>like</button>
+          <br />
+          {props.blog.author}
+          <br />
+          <DeleteButton
+            deleteBlog={deleteBlog}
+            username={props.blog.user.username}
+          />
+        </div>
+      )}
     </>
   );
 };
